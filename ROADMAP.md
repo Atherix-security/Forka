@@ -9,12 +9,21 @@
 - [x] model-agnostic router interface
 - [x] tests and CI
 
-## v0.2 - Agent runtime
-- [ ] Agent, policy, goal, observation, and action abstractions
-- [ ] Event queue and environment API
-- [ ] pluggable scoring/evaluation
+## v0.2 - Scenario/model foundation (in development)
+- [x] generic Model and Scenario, independent of agents
+- [x] optional Agent(Model), policy callable, Action and Observation
+- [x] shared Environment interface with branch-local world state
+- [x] pluggable scoring/evaluation
+- [x] deterministic state fingerprinting
+- [x] structured termination reasons and result statistics
+- [x] external state/model adapter boundary
+- [x] agent and non-agent scientific-style examples
+
+## Follow-on runtime work
+- [ ] richer agent goals and memory
+- [ ] event scheduling
 - [ ] branch deduplication by state fingerprint
-- [ ] CLI and JSON scenario format
+- [ ] CLI and scenario format design
 
 ## v0.3 - Intelligence + knowledge
 - [ ] local-model adapter
