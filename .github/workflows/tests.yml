@@ -21,6 +21,8 @@ jobs:
       - run: pytest -q
       - run: ruff check .
       - run: python examples/coin_branch.py
+      - run: python examples/attacker_defender.py
+      - run: python examples/population_growth.py
       - run: python -m build
       - name: Install built wheel and verify imports
         shell: bash
@@ -29,3 +31,5 @@ jobs:
           python -m pip install --no-deps dist/*.whl
           python -m pytest -q
           python examples/coin_branch.py
+          python examples/attacker_defender.py
+          python examples/population_growth.py

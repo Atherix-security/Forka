@@ -16,7 +16,7 @@ remain responsible for their own numerical methods.
 | `Action` | Named intent, domain payload and nonnegative probability weight. |
 | `Environment` | Protocol: `observe(state, actor)` and `apply(state, actor, action, rng) -> State`. No mutable world hidden inside the environment. |
 | `Scenario` | Binds one model (possibly a domain-defined composite), initial state, config and optional evaluator; `run()` delegates to the existing kernel. |
-| `Evaluator` | Callable protocol `evaluator(state) -> float`; scores initial and generated states before pruning. Without it, existing state scores are preserved. |
+| `Evaluator` | Callable protocol `evaluator(state) -> float`; scores initial and probability-eligible states before branch-cap pruning. Without it, existing state scores are preserved. |
 | `StateAdapter[T]` | Optional external boundary: `to_state(external)` and `from_state(state)`. External libraries are imported by adapters, never by the kernel. |
 
 The agent policy is a callable `(Observation, random.Random) -> Iterable[Action]`.
