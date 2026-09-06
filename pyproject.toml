@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "forka"
+version = "0.1.0"
+description = "Open-source, compute-efficient simulation engine for AI agents and branching scenarios."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "Atherix Security"}]
+keywords = ["simulation", "ai", "agents", "branching", "decision-making"]
+classifiers = ["Programming Language :: Python :: 3", "License :: OSI Approved :: Apache Software License"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "build>=1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[project.urls]
+Repository = "https://github.com/Atherix-security/Forka"
+Issues = "https://github.com/Atherix-security/Forka/issues"
