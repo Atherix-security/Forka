@@ -44,6 +44,10 @@ def test_seeds_reproduce_individual_runs_and_prefixes():
         assert replay.branches == result.branches
         assert result.reproducibility.seed == seed
     assert scenario.config.seed == 999
+    unseeded_template = Experiment(Scenario(RandomModel()), runs=1, seed=42).run()
+    assert unseeded_template.reproducibility.simulation_config["seed"] is None
+    assert unseeded_template.reproducibility.seed == 42
+    assert unseeded_template.reproducibility.deterministic_settings["seeded"] is True
     assert a.seeds != Experiment(scenario, runs=8, seed=43).run().seeds
 
 

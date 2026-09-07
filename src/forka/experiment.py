@@ -123,7 +123,15 @@ class Experiment:
                 "start_method": "spawn" if effective_workers > 1 else "serial",
             },
         )
-        record = replace(record, seed=self.seed)
+        record = replace(
+            record,
+            seed=self.seed,
+            deterministic_settings={
+                **record.deterministic_settings,
+                "seeded": True,
+                "experiment_seed_scheme": "forka-experiment-v1",
+            },
+        )
         started = time.perf_counter()
         results = []
         totals = dict(
