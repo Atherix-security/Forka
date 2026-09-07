@@ -1,0 +1,631 @@
+{
+  "hardware": {
+    "processor": "Intel64 Family 6 Model 170 Stepping 4, GenuineIntel",
+    "logical_cpus": 22,
+    "architecture": "AMD64"
+  },
+  "python": "3.12.14",
+  "os": "Windows 11",
+  "configuration": {
+    "depth": 7,
+    "repeats": 5,
+    "runs": 128,
+    "work": 10000
+  },
+  "method": "one warmup; raw timed repetitions; separate tracemalloc run; all cases reported",
+  "branch_cases": {
+    "convergent_full_none": {
+      "seconds": [
+        0.05212310003116727,
+        0.06050249992404133,
+        0.056402700021862984,
+        0.05296190001536161,
+        0.054135699989274144
+      ],
+      "median_seconds": 0.054135699989274144,
+      "transitions_per_second": 403504.5266677614,
+      "peak_python_bytes_separate_run": 12176960,
+      "statistics": {
+        "branches_explored": 21844,
+        "branches_pruned": 0,
+        "peak_active_branches": 16384,
+        "retained_probability_mass": 1.0,
+        "runtime_seconds": 0.062000000034458935,
+        "states_visited": 5461,
+        "transitions_generated": 21844,
+        "branches_retained": 16384,
+        "branches_merged": 0,
+        "states_deduplicated": 0,
+        "absorbed_probability_mass": 0.0,
+        "removed_probability_mass": 0.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "none"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "convergent_full_none",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "none",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.NoPruning",
+            "replaces_config_limits": true
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 16384
+    },
+    "convergent_full_state_markov": {
+      "seconds": [
+        0.0015298000071197748,
+        0.0015037000412121415,
+        0.0016213000053539872,
+        0.002804799936711788,
+        0.001709400094114244
+      ],
+      "median_seconds": 0.0016213000053539872,
+      "transitions_per_second": 120890.64291170854,
+      "peak_python_bytes_separate_run": 32431,
+      "statistics": {
+        "branches_explored": 196,
+        "branches_pruned": 0,
+        "peak_active_branches": 15,
+        "retained_probability_mass": 1.0,
+        "runtime_seconds": 0.0,
+        "states_visited": 49,
+        "transitions_generated": 196,
+        "branches_retained": 15,
+        "branches_merged": 133,
+        "states_deduplicated": 49,
+        "absorbed_probability_mass": 3.78369140625,
+        "removed_probability_mass": 0.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "state_markov"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "convergent_full_state_markov",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "state_markov",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.NoPruning",
+            "replaces_config_limits": true
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 16384
+    },
+    "convergent_top64_none": {
+      "seconds": [
+        0.002292899996973574,
+        0.002338399994187057,
+        0.002531199948862195,
+        0.005854599992744625,
+        0.0027206999948248267
+      ],
+      "median_seconds": 0.002531199948862195,
+      "transitions_per_second": 437737.0505629393,
+      "peak_python_bytes_separate_run": 157638,
+      "statistics": {
+        "branches_explored": 1108,
+        "branches_pruned": 768,
+        "peak_active_branches": 64,
+        "retained_probability_mass": 0.00390625,
+        "runtime_seconds": 0.0,
+        "states_visited": 277,
+        "transitions_generated": 1108,
+        "branches_retained": 64,
+        "branches_merged": 0,
+        "states_deduplicated": 0,
+        "absorbed_probability_mass": 0.0,
+        "removed_probability_mass": 0.99609375
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "none"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "convergent_top64_none",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "none",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.TopK",
+            "replaces_config_limits": true,
+            "k": 64
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 64
+    },
+    "convergent_top64_state_markov": {
+      "seconds": [
+        0.0015546000795438886,
+        0.001498500001616776,
+        0.0015026999171823263,
+        0.0014911000616848469,
+        0.0015449000056833029
+      ],
+      "median_seconds": 0.0015026999171823263,
+      "transitions_per_second": 130431.8964544262,
+      "peak_python_bytes_separate_run": 32327,
+      "statistics": {
+        "branches_explored": 196,
+        "branches_pruned": 0,
+        "peak_active_branches": 15,
+        "retained_probability_mass": 1.0,
+        "runtime_seconds": 0.0,
+        "states_visited": 49,
+        "transitions_generated": 196,
+        "branches_retained": 15,
+        "branches_merged": 133,
+        "states_deduplicated": 49,
+        "absorbed_probability_mass": 3.78369140625,
+        "removed_probability_mass": 0.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "state_markov"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "convergent_top64_state_markov",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "state_markov",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.TopK",
+            "replaces_config_limits": true,
+            "k": 64
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 16384
+    },
+    "convergent_threshold_none": {
+      "seconds": [
+        0.0505801000399515,
+        0.05010929994750768,
+        0.049940899945795536,
+        0.05605210002977401,
+        0.06196109997108579
+      ],
+      "median_seconds": 0.0505801000399515,
+      "transitions_per_second": 431869.45029262826,
+      "peak_python_bytes_separate_run": 10986360,
+      "statistics": {
+        "branches_explored": 21844,
+        "branches_pruned": 16384,
+        "peak_active_branches": 4096,
+        "retained_probability_mass": 0,
+        "runtime_seconds": 0.06299999996554106,
+        "states_visited": 5461,
+        "transitions_generated": 21844,
+        "branches_retained": 0,
+        "branches_merged": 0,
+        "states_deduplicated": 0,
+        "absorbed_probability_mass": 0.0,
+        "removed_probability_mass": 1.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "none"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "convergent_threshold_none",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "none",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.MinProbability",
+            "replaces_config_limits": true,
+            "threshold": 0.0001
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 0
+    },
+    "convergent_threshold_state_markov": {
+      "seconds": [
+        0.0014940999681130052,
+        0.001891900086775422,
+        0.0015492999227717519,
+        0.0015669000567868352,
+        0.001587199978530407
+      ],
+      "median_seconds": 0.0015669000567868352,
+      "transitions_per_second": 125087.74835449783,
+      "peak_python_bytes_separate_run": 32439,
+      "statistics": {
+        "branches_explored": 196,
+        "branches_pruned": 2,
+        "peak_active_branches": 13,
+        "retained_probability_mass": 0.9998779296875,
+        "runtime_seconds": 0.015000000013969839,
+        "states_visited": 49,
+        "transitions_generated": 196,
+        "branches_retained": 13,
+        "branches_merged": 133,
+        "states_deduplicated": 49,
+        "absorbed_probability_mass": 3.78369140625,
+        "removed_probability_mass": 0.0001220703125
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "state_markov"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "convergent_threshold_state_markov",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "state_markov",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.MinProbability",
+            "replaces_config_limits": true,
+            "threshold": 0.0001
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 16382
+    },
+    "divergent_full_none": {
+      "seconds": [
+        0.06728870002552867,
+        0.07313319994136691,
+        0.0633456000359729,
+        0.08658250002190471,
+        0.0683815999655053
+      ],
+      "median_seconds": 0.0683815999655053,
+      "transitions_per_second": 319442.65725018247,
+      "peak_python_bytes_separate_run": 14179872,
+      "statistics": {
+        "branches_explored": 21844,
+        "branches_pruned": 0,
+        "peak_active_branches": 16384,
+        "retained_probability_mass": 1.0,
+        "runtime_seconds": 0.062000000034458935,
+        "states_visited": 5461,
+        "transitions_generated": 21844,
+        "branches_retained": 16384,
+        "branches_merged": 0,
+        "states_deduplicated": 0,
+        "absorbed_probability_mass": 0.0,
+        "removed_probability_mass": 0.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "none"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "divergent_full_none",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "none",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.NoPruning",
+            "replaces_config_limits": true
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 16384
+    },
+    "divergent_full_state_markov": {
+      "seconds": [
+        0.47220740001648664,
+        0.5074476998997852,
+        0.48510970000643283,
+        0.4048446000088006,
+        0.3671667999587953
+      ],
+      "median_seconds": 0.47220740001648664,
+      "transitions_per_second": 46259.33435019726,
+      "peak_python_bytes_separate_run": 17918232,
+      "statistics": {
+        "branches_explored": 21844,
+        "branches_pruned": 0,
+        "peak_active_branches": 16384,
+        "retained_probability_mass": 1.0,
+        "runtime_seconds": 0.35900000005494803,
+        "states_visited": 5461,
+        "transitions_generated": 21844,
+        "branches_retained": 16384,
+        "branches_merged": 0,
+        "states_deduplicated": 0,
+        "absorbed_probability_mass": 0.0,
+        "removed_probability_mass": 0.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 7,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": 42,
+          "deduplication": "state_markov"
+        },
+        "experiment_config": null,
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.LatticeModel",
+        "scenario_identifier": "divergent_full_state_markov",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "state_markov",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "forka.pruning.NoPruning",
+            "replaces_config_limits": true
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels"
+        }
+      },
+      "represented_paths": 16384
+    }
+  },
+  "experiment_cases": {
+    "1": {
+      "seconds": [
+        0.25234939996153116,
+        0.2878876000177115,
+        0.2834547000238672,
+        0.21099679998587817,
+        0.2331205999944359
+      ],
+      "median_seconds": 0.25234939996153116,
+      "simulations_per_second": 507.2332251216475,
+      "statistics": {
+        "runs_completed": 128,
+        "worker_count": 1,
+        "runtime_seconds": 0.2331205999944359,
+        "states_visited": 128,
+        "transitions_generated": 128,
+        "branches_generated": 128,
+        "branches_retained": 128,
+        "branches_merged": 0,
+        "states_deduplicated": 0,
+        "branches_pruned": 0,
+        "peak_active_branches": 1,
+        "mean_retained_probability_mass": 1.0,
+        "mean_removed_probability_mass": 0.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 20,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": null,
+          "deduplication": "none"
+        },
+        "experiment_config": {
+          "runs": 128,
+          "seed": 42,
+          "workers": 1,
+          "effective_workers": 1,
+          "keep_results": true,
+          "seed_scheme": "forka-experiment-v1",
+          "start_method": "serial"
+        },
+        "worker_count": 1,
+        "model_identifier": "benchmarks.workloads.CpuModel",
+        "scenario_identifier": "benchmarks.workloads.CpuModel",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "none",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "config_defaults",
+            "replaces_config_limits": false
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels",
+          "experiment_seed_scheme": "forka-experiment-v1"
+        }
+      }
+    },
+    "2": {
+      "seconds": [
+        0.34250529995188117,
+        0.3338747000088915,
+        0.3431689999997616,
+        0.3436512000625953,
+        0.35315139999147505
+      ],
+      "median_seconds": 0.3431689999997616,
+      "simulations_per_second": 372.9940641494101,
+      "statistics": {
+        "runs_completed": 128,
+        "worker_count": 2,
+        "runtime_seconds": 0.35315139999147505,
+        "states_visited": 128,
+        "transitions_generated": 128,
+        "branches_generated": 128,
+        "branches_retained": 128,
+        "branches_merged": 0,
+        "states_deduplicated": 0,
+        "branches_pruned": 0,
+        "peak_active_branches": 1,
+        "mean_retained_probability_mass": 1.0,
+        "mean_removed_probability_mass": 0.0
+      },
+      "reproducibility": {
+        "forka_version": "0.3.0.dev0",
+        "git_commit": "1c07c3ee372791e57af4c4ee8ee33eee10f09393",
+        "git_dirty": false,
+        "seed": 42,
+        "simulation_config": {
+          "max_steps": 20,
+          "max_branches": 128,
+          "max_runtime_seconds": null,
+          "min_probability": 1e-09,
+          "seed": null,
+          "deduplication": "none"
+        },
+        "experiment_config": {
+          "runs": 128,
+          "seed": 42,
+          "workers": 2,
+          "effective_workers": 2,
+          "keep_results": true,
+          "seed_scheme": "forka-experiment-v1",
+          "start_method": "spawn"
+        },
+        "worker_count": 2,
+        "model_identifier": "benchmarks.workloads.CpuModel",
+        "scenario_identifier": "benchmarks.workloads.CpuModel",
+        "evaluator_identifier": null,
+        "python_version": "3.12.14",
+        "platform": "Windows 11 AMD64",
+        "deterministic_settings": {
+          "seeded": true,
+          "rng": "random.Random; serial traversal order",
+          "deduplication": "none",
+          "runtime_limit_may_change_results": false,
+          "pruning": {
+            "name": "config_defaults",
+            "replaces_config_limits": false
+          },
+          "source_snapshot": "cached once per process; unavailable for wheels",
+          "experiment_seed_scheme": "forka-experiment-v1"
+        }
+      }
+    }
+  },
+  "command": "python -m benchmarks.run --depth 7 --repeats 5 --runs 128 --work 10000"
+}

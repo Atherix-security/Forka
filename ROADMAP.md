@@ -25,15 +25,28 @@
 - [ ] branch deduplication by state fingerprint
 - [ ] CLI and scenario format design
 
-## v0.3 - Intelligence + knowledge
+## v0.3 - Efficiency and experiments (in development)
+- [x] explicit state-equivalence deduplication with probability/provenance accounting
+- [x] pruning strategy boundary and built-in threshold/top-K/no-pruning
+- [x] reproducible Experiment runs and local spawn CPU workers
+- [x] external callable/object systems-under-test boundary
+- [x] efficiency metrics, reproducibility records and CPU benchmark suite
+
+## v0.4 - Measured local efficiency and reliability
+- [ ] streaming frontier construction and bounded task submission
+- [ ] cooperative cancellation and per-run failure records
+- [ ] branch-local RNG and checkpoint semantics
+- [ ] domain adapter/model versioning and reproducibility extensions
+
+## Later - Optional intelligence + knowledge
 - [ ] local-model adapter
 - [ ] cloud-provider adapters as optional extras
 - [ ] research-provider interface with source provenance
 - [ ] persistent SQLite cache
 - [ ] intelligent routing by complexity/cost/privacy
 
-## v0.4 - Scale
-- [ ] multiprocessing branch execution
+## Later - Scale
+- [ ] evaluate branch-level parallelism after measuring experiment-level workers
 - [ ] adaptive pruning
 - [ ] hardware detection and automatic profiles
 - [ ] distributed worker protocol prototype

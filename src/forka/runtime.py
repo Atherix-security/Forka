@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 import random
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Any, Callable, Iterable, Protocol, TypeVar
 
 from .core import (
@@ -15,6 +15,8 @@ from .core import (
     State,
     Transition,
 )
+from .metadata import qualified_name
+from .pruning import PruningStrategy
 
 
 class Model(Protocol):
@@ -87,11 +89,19 @@ class Scenario:
     initial_state: State = field(default_factory=State)
     config: SimulationConfig = field(default_factory=SimulationConfig)
     evaluator: Evaluator | None = None
+    pruning: PruningStrategy | None = None
+    identifier: str | None = None
 
     def run(self) -> SimulationResult:
-        return Simulation(self.model.step, self.config, evaluator=self.evaluator).run(
-            self.initial_state
+        result = Simulation(
+            self.model.step, self.config, evaluator=self.evaluator, pruning=self.pruning
+        ).run(self.initial_state)
+        result.reproducibility = replace(
+            result.reproducibility,
+            model_identifier=qualified_name(self.model),
+            scenario_identifier=self.identifier or qualified_name(self.model),
         )
+        return result
 
 
 ExternalState = TypeVar("ExternalState")
