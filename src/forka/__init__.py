@@ -1,3 +1,4 @@
+from ._version import __version__
 from .budget import ComputeBudget
 from .cache import MemoryCache
 from .core import (
@@ -11,7 +12,10 @@ from .core import (
     TerminationReason,
     Transition,
 )
+from .experiment import Experiment, ExperimentResult, ExperimentStatistics, run_seed
 from .identity import state_fingerprint
+from .metadata import ReproducibilityRecord
+from .pruning import MinProbability, NoPruning, PruningStrategy, TopK
 from .router import IntelligenceRouter, RouteRequest
 from .runtime import (
     Action,
@@ -22,8 +26,22 @@ from .runtime import (
     Scenario,
     StateAdapter,
 )
+from .systems import CallableSystem, SystemModel, SystemUnderTest
 
 __all__ = [
+    "Experiment",
+    "ExperimentResult",
+    "ExperimentStatistics",
+    "run_seed",
+    "ReproducibilityRecord",
+    "MinProbability",
+    "NoPruning",
+    "PruningStrategy",
+    "TopK",
+    "CallableSystem",
+    "SystemModel",
+    "SystemUnderTest",
+    "__version__",
     "Action",
     "Agent",
     "Environment",
@@ -46,4 +64,3 @@ __all__ = [
     "State",
     "Transition",
 ]
-__version__ = "0.2.0.dev0"

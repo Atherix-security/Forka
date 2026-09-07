@@ -9,6 +9,8 @@ from numbers import Real
 from typing import Any, Callable, Iterable, Protocol
 
 from .identity import state_fingerprint
+from .metadata import ReproducibilityRecord, capture_record
+from .pruning import MinProbability, PruningStrategy, TopK, select_branches
 
 
 @dataclass(frozen=True)
@@ -44,6 +46,7 @@ class TerminationReason(str, Enum):
     MAX_BRANCHES = "max_branches"
     MIN_PROBABILITY = "min_probability"
     NO_BRANCHES = "no_branches"
+    CUSTOM_PRUNING = "custom_pruning"
 
 
 @dataclass(frozen=True)
@@ -55,6 +58,26 @@ class SimulationStatistics:
     peak_active_branches: int = 0
     retained_probability_mass: float = 0.0
     runtime_seconds: float = 0.0
+    # New observational metrics preserve the v0.2 five-field equality contract.
+    states_visited: int = field(default=0, compare=False)
+    transitions_generated: int = field(default=0, compare=False)
+    branches_retained: int = field(default=0, compare=False)
+    branches_merged: int = field(default=0, compare=False)
+    states_deduplicated: int = field(default=0, compare=False)
+    absorbed_probability_mass: float = field(default=0.0, compare=False)
+    removed_probability_mass: float = field(default=0.0, compare=False)
+
+    @property
+    def branches_generated(self) -> int:
+        return self.branches_explored
+
+    @property
+    def transitions_per_second(self) -> float:
+        return (
+            self.transitions_generated / self.runtime_seconds
+            if self.runtime_seconds > 0
+            else 0.0
+        )
 
 
 @dataclass(frozen=True)
@@ -70,6 +93,7 @@ class Branch:
     probability: float = 1.0
     history: tuple[str, ...] = ()
     steps: int = 0
+    path_count: int = 1
 
 
 @dataclass(frozen=True)
@@ -79,8 +103,15 @@ class SimulationConfig:
     max_runtime_seconds: float | None = None
     min_probability: float = 1e-9
     seed: int | None = None
+    deduplication: str = "none"
 
     def __post_init__(self):
+        if self.deduplication not in ("none", "state_markov"):
+            raise ValueError(
+                "deduplication must be 'none' or the explicit 'state_markov' contract"
+            )
+        if self.seed is not None and type(self.seed) is not int:
+            raise ValueError("seed must be an integer or None")
         if not isinstance(self.max_steps, int) or self.max_steps < 0:
             raise ValueError("max_steps must be a nonnegative integer")
         if not isinstance(self.max_branches, int) or self.max_branches < 1:
@@ -104,6 +135,7 @@ class SimulationResult:
     truncated: bool = False
     termination_reasons: tuple[TerminationReason, ...] = ()
     statistics: SimulationStatistics = field(default_factory=SimulationStatistics)
+    reproducibility: ReproducibilityRecord | None = field(default=None, compare=False)
 
     def best(self, key: Callable[[Branch], float] | None = None) -> Branch | None:
         if not self.branches:
@@ -124,10 +156,12 @@ class Simulation:
         config: SimulationConfig | None = None,
         *,
         evaluator: Evaluator | None = None,
+        pruning: PruningStrategy | None = None,
     ):
         self.step = step
         self.config = config or SimulationConfig()
         self.evaluator = evaluator
+        self.pruning = pruning
 
     def _evaluate(self, state: State) -> State:
         if self.evaluator is None:
@@ -152,6 +186,13 @@ class Simulation:
         peak = 1
         runtime_exhausted = False
         reasons: list[TerminationReason] = []
+        visited = 0
+        generated = 0
+        merged = 0
+        deduplicated = 0
+        absorbed_mass = 0.0
+        removed_mass = 0.0
+        merging = self.config.deduplication == "state_markov"
         for _ in range(self.config.max_steps):
             if all(b.state.terminal for b in active):
                 break
@@ -175,7 +216,9 @@ class Simulation:
                     truncated = True
                     runtime_exhausted = True
                     break
+                visited += 1
                 transitions = list(self.step(branch.state, rng))
+                generated += len(transitions)
                 if not transitions:
                     next_branches.append(
                         Branch(
@@ -183,6 +226,7 @@ class Simulation:
                             branch.probability,
                             branch.history,
                             branch.steps,
+                            branch.path_count,
                         )
                     )
                     continue
@@ -207,29 +251,56 @@ class Simulation:
                     if t.probability > 0:
                         explored += 1
                     p = branch.probability * ((t.probability / scale) / total)
-                    if p > 0 and p >= self.config.min_probability:
+                    if p > 0 and (
+                        merging
+                        or self.pruning is not None
+                        or p >= self.config.min_probability
+                    ):
                         next_branches.append(
                             Branch(
                                 self._evaluate(t.state),
                                 p,
                                 branch.history + (t.label,),
                                 branch.steps + 1,
+                                branch.path_count,
                             )
                         )
                     elif t.probability > 0:
                         truncated = True
                         pruned += 1
+                        removed_mass += p
                         if TerminationReason.MIN_PROBABILITY not in reasons:
                             reasons.append(TerminationReason.MIN_PROBABILITY)
+            if merging:
+                next_branches, count, groups, mass = _merge_frontier(next_branches)
+                merged += count
+                deduplicated += groups
+                absorbed_mass += mass
+            if self.pruning is not None:
+                strategies = [self.pruning]
+            else:
+                strategies = (
+                    [MinProbability(self.config.min_probability)] if merging else []
+                )
+                strategies.append(TopK(self.config.max_branches))
+            for strategy in strategies:
+                next_branches, count, mass = select_branches(next_branches, strategy)
+                if count:
+                    truncated = True
+                    pruned += count
+                    removed_mass += mass
+                    reason = (
+                        TerminationReason.MIN_PROBABILITY
+                        if isinstance(strategy, MinProbability)
+                        else TerminationReason.MAX_BRANCHES
+                        if isinstance(strategy, TopK)
+                        else TerminationReason.CUSTOM_PRUNING
+                    )
+                    if reason not in reasons:
+                        reasons.append(reason)
             next_branches.sort(
                 key=lambda b: (b.probability, b.state.score), reverse=True
             )
-            if len(next_branches) > self.config.max_branches:
-                truncated = True
-                pruned += len(next_branches) - self.config.max_branches
-                if TerminationReason.MAX_BRANCHES not in reasons:
-                    reasons.append(TerminationReason.MAX_BRANCHES)
-                next_branches = next_branches[: self.config.max_branches]
             active = next_branches
             peak = max(peak, len(active))
             executed += 1
@@ -251,7 +322,46 @@ class Simulation:
             peak_active_branches=peak,
             retained_probability_mass=sum(b.probability for b in active),
             runtime_seconds=elapsed,
+            states_visited=visited,
+            transitions_generated=generated,
+            branches_retained=len(active),
+            branches_merged=merged,
+            states_deduplicated=deduplicated,
+            absorbed_probability_mass=absorbed_mass,
+            removed_probability_mass=removed_mass,
         )
         return SimulationResult(
-            active, elapsed, executed, truncated, tuple(reasons), statistics
+            active,
+            elapsed,
+            executed,
+            truncated,
+            tuple(reasons),
+            statistics,
+            capture_record(
+                self.config, self.step, pruning=self.pruning, evaluator=self.evaluator
+            ),
         )
+
+
+def _merge_frontier(branches: list[Branch]):
+    """Merge only exact state/depth matches under the explicit caller contract."""
+    groups: dict[tuple[str, int], list[Branch]] = {}
+    for branch in branches:
+        groups.setdefault((branch.state.fingerprint(), branch.steps), []).append(branch)
+    retained = []
+    merged = 0
+    duplicate_groups = 0
+    absorbed = []
+    for group in groups.values():
+        representative = group[0]
+        if len(group) > 1:
+            merged += len(group) - 1
+            duplicate_groups += 1
+            absorbed.extend(b.probability for b in group[1:])
+            representative = replace(
+                representative,
+                probability=math.fsum(b.probability for b in group),
+                path_count=sum(b.path_count for b in group),
+            )
+        retained.append(representative)
+    return retained, merged, duplicate_groups, math.fsum(absorbed)

@@ -8,7 +8,7 @@ Use it to orchestrate scientific, statistical, rule-based or deterministic model
 including intelligent agents. Agents are first-class and optional. The core is
 CPU-first: no GPU, paid API or runtime dependency is required.
 
-> **Status:** v0.2 foundation in development (`0.2.0.dev0`). The v0.1 kernel API
+> **Status:** v0.3 efficiency foundation in development (`0.3.0.dev0`). The v0.1/v0.2 kernel API
 > remains supported. APIs may change before v1.0.
 
 ## Why Forka?
@@ -17,6 +17,8 @@ Exploring alternative outcomes should work on a laptop. Forka supplies branching
 pruning, reproducible execution and result accounting around your domain model.
 It orchestrates scientific libraries rather than replacing their numerical methods.
 Agent models can use rules or optional inference providers when appropriate.
+Explore branching decisions cheaply and reproducibly before spending expensive
+inference. Model first, Agent optional, AI optional.
 
 - CPU-first simulation kernel
 - deterministic and probabilistic branching
@@ -28,6 +30,9 @@ Agent models can use rules or optional inference providers when appropriate.
 - zero runtime dependencies for the core package
 - generic Model and Scenario interfaces, with optional Agent and Environment composition
 - evaluator scoring, deterministic state fingerprints and structured result metrics
+- opt-in state deduplication, configurable pruning and explicit probability-loss accounting
+- reproducible experiments with optional local CPU process workers
+- adapters for ordinary Python functions/objects under test
 
 ## Quick start
 
@@ -42,6 +47,9 @@ pip install -e .
 python examples/coin_branch.py
 python examples/population_growth.py
 python examples/attacker_defender.py
+python examples/branch_merging.py
+python examples/experiment_runs.py --workers 2
+python examples/system_under_test.py
 ```
 
 ## Scientific model: no agents required
@@ -136,6 +144,14 @@ print(result.best())
 ```
 
 ## Architecture and adapters
+
+The [v0.3 proposal](docs/architecture-v0.3.md) and [v0.3 API guide](docs/api-v0.3.md)
+explain merging contracts, pruning, experiments, CPU workers and reproducibility.
+See the [CPU benchmarks](benchmarks/README.md) for reproducible measurements and
+limitations. Merging is disabled by default: `deduplication="state_markov"` explicitly
+asserts state/depth-only future behavior, which shared RNG sampling and effectful
+systems generally do not satisfy. `Experiment(scenario, runs=1000, seed=42)` runs
+serially by default; `workers=2` opts into local spawn multiprocessing.
 
 1. **Simulation kernel**: state, transitions, branches, pruning, scoring.
 2. **Scenario runtime**: generic models, optional agents, environments and evaluators.
