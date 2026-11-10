@@ -8,7 +8,7 @@ Use it to orchestrate scientific, statistical, rule-based or deterministic model
 including intelligent agents. Agents are first-class and optional. The core is
 CPU-first: no GPU, paid API or runtime dependency is required.
 
-> **Status:** v0.2 foundation in development (`0.2.0.dev0`). The v0.1 kernel API
+> **Status:** [v0.2.0](https://github.com/Atherix-security/Forka/releases/tag/v0.2.0) is released. The [roadmap](ROADMAP.md) covers follow-on runtime work and the v0.3 intelligence and knowledge milestone. The v0.1 kernel API
 > remains supported. APIs may change before v1.0.
 
 ## Why Forka?

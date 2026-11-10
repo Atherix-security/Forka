@@ -9,7 +9,7 @@
 - [x] model-agnostic router interface
 - [x] tests and CI
 
-## v0.2 - Scenario/model foundation (in development)
+## v0.2 - Scenario/model foundation (released in v0.2.0)
 - [x] generic Model and Scenario, independent of agents
 - [x] optional Agent(Model), policy callable, Action and Observation
 - [x] shared Environment interface with branch-local world state
