@@ -1,0 +1,32 @@
+name: Feature request
+description: Discuss a scenario or runtime improvement before opening a large PR.
+body:
+  - type: input
+    id: environment
+    attributes:
+      label: OS, Python and Forka versions
+      description: Include the operating system, interpreter version and Forka release or commit.
+    validations:
+      required: false
+  - type: textarea
+    id: example
+    attributes:
+      label: Minimal Model or Scenario
+      description: Include the model or scenario, the seed if set, and the configuration needed to run it.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Proposed scenario behavior
+      description: Describe the branch, score, termination reason or other result you expect.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Current limitation and use case
+      description: Explain how you handle this scenario today. Mention any dependency or CPU-only installation impact.
+    validations:
+      required: true
